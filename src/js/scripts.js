@@ -24,7 +24,6 @@ const controls1 = new OrbitControls(camera, renderer.domElement);
 controls1.enableDamping = true;
 controls1.dampingFactor = 0.12;
 controls1.enableZoom = false;
-controls1.enablePan = true;
 
 const controls2 = new TrackballControls(camera, renderer.domElement);
 
@@ -164,8 +163,10 @@ b.renderOrder = 1;
 const clock = new THREE.Clock();
 
 function animate() {
-	controls1.update();
-    controls2.update();
+  const target = controls1.target;
+  controls1.update();
+  controls2.target.set(target.x, target.y, target.z);
+  controls2.update();
 
     if(mixer1 && mixer2 && mixer3) {
         const delta = clock.getDelta();
